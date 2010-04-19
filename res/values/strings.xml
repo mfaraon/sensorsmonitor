@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, SensorReader!</string>
+    <string name="app_name">SensorReader</string>
+    <string name="Accelerometer">Accelerometer</string>
+    <string name="Magnetometer">Magnetometer</string>
+    <string name="Temperature">Temperature</string>
+    <string name="Compas">Compas</string>
+    <string name="Sensors">Detected Sensors</string>
+</resources>
