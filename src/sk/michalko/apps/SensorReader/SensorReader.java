@@ -1,5 +1,7 @@
 package sk.michalko.apps.SensorReader;
 
+import sk.michalko.apps.SensorReader.egl.EGLView;
+
 import java.util.List;
 
 import android.app.Activity;
@@ -7,6 +9,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -28,6 +31,9 @@ public class SensorReader extends Activity implements SensorEventListener {
     int orientationXMax = 0;
     int orientationYMax = 0;
     int orientationZMax = 0;
+	/** The OpenGL View */
+	private GLSurfaceView glSurface;
+
 	
     /** Called when the activity is first created. */
     @Override
@@ -35,6 +41,10 @@ public class SensorReader extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+		glSurface = (GLSurfaceView) findViewById(R.id.eglview);
+		//Set our own Renderer
+		glSurface.setRenderer(new EGLView());
+		
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         
         valuesAccelerometerView = (TextView) findViewById(R.id.textviewAccelerometer);
@@ -45,7 +55,6 @@ public class SensorReader extends Activity implements SensorEventListener {
         progressbarOX = (ProgressBar) findViewById(R.id.progressbarOX);
         progressbarOY = (ProgressBar) findViewById(R.id.progressbarOY);
         progressbarOZ = (ProgressBar) findViewById(R.id.progressbarOZ);
-        
 
     }
 
@@ -101,6 +110,8 @@ public class SensorReader extends Activity implements SensorEventListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		glSurface.onResume();
+		
 		List<Sensor> sensorList = sensorManager.getSensorList(Sensor.TYPE_ALL);
 		String sensors = "Sensors: ";
 		
@@ -115,6 +126,12 @@ public class SensorReader extends Activity implements SensorEventListener {
 	protected void onStop() {
 		sensorManager.unregisterListener(this);
 		super.onStop();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		glSurface.onPause();
 	}
 
 }

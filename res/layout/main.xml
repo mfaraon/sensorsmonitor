@@ -41,5 +41,9 @@
 		android:layout_height="wrap_content" 
 		android:text="@string/Sensors"
 		android:id="@+id/textviewSensors" />
-
+	<android.opengl.GLSurfaceView
+		android:id="@+id/eglview"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"/>
+		
 </LinearLayout>
